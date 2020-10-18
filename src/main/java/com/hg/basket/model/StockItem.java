@@ -3,6 +3,7 @@ package com.hg.basket.model;
 
 import com.hg.basket.ProductType;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import lombok.Data;
 
@@ -13,9 +14,9 @@ public class StockItem implements Serializable {
 
     private ProductType product;
     private String unit;
-    private double cost;
+    private BigDecimal cost;
 
-    public StockItem(ProductType product, String unit, double cost) {
+    public StockItem(ProductType product, String unit, BigDecimal cost) {
         this.product = product;
         this.unit = unit;
         this.cost = cost;

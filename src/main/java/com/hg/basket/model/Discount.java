@@ -32,6 +32,9 @@ public class Discount implements Serializable {
         this.validTo = validTo;
     }
 
+    public Discount() {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), offer, countOfBuyingStockItem, buyingStockItem, discountRate,
