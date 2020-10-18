@@ -26,7 +26,12 @@ public class ShoppingServiceImplTest {
     }
 
     @Test
-    public void getStockItemCorrectly() {
+    public void calculateDiscount() {
+
+    }
+
+    @Test
+    public void calculateExpireDate() {
 
     }
 
