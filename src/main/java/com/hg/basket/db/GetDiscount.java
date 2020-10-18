@@ -1,37 +1,38 @@
 package com.hg.basket.db;
 
+import com.hg.basket.ProductType;
 import com.hg.basket.model.Discount;
 import com.hg.basket.model.StockItem;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GetDiscount {
 
-    private static final Map<Discount, StockItem> DISCOUNT_MAP = new HashMap<>();
+    private static final Set<Discount> DISCOUNT_SET = new HashSet<>();
 
     static {
-        DISCOUNT_MAP.put(
+        DISCOUNT_SET.add(
             new Discount("Buy 2 tins of soup and get a loaf of bread half price | yesterday | for 7 days",
                 2,
-                new StockItem("soup", "tin", 0.65),
-                "bread",
+                new StockItem(ProductType.SOUP, "tin", 0.65),
+                0.5,
+                ProductType.BREAD,
                 LocalDateTime.now().minusDays(Long.valueOf(1)),
                 LocalDateTime.now().plusDays(Long.valueOf(6)))
-            , new StockItem("bread", "loaf", 0.40));
-        DISCOUNT_MAP.put(
+        );
+        DISCOUNT_SET.add(
             new Discount("Apples have a 10% discount | from 3 days hence | until the end of the following month",
                 1,
-                new StockItem("apples", "single", 0.10),
-                "apples",
+                new StockItem(ProductType.APPLES, "single", 0.10),
+                0.9,
+                ProductType.APPLES,
                 LocalDateTime.now().minusDays(Long.valueOf(3)),
                 LocalDateTime.now().plusMonths(Long.valueOf(2)).minusDays(Long.valueOf(3)))
-            , new StockItem("apples",
-                "single", 0.09));
+        );
     }
 
-    public static StockItem getStockItem(Discount discount) {
-        return DISCOUNT_MAP.get(discount);
+    public static Boolean getStockItem(Discount discount) {
+        return DISCOUNT_SET.contains(discount);
     }
-
 }
