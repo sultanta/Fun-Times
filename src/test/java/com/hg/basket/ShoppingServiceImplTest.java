@@ -36,14 +36,15 @@ public class ShoppingServiceImplTest {
     @Test
     public void calculateSixApplesAndMilk() {
         //Price a basket containing: 6 apples and a bottle of milk, bought today
+        BigDecimal applePrice = GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(6));
 
         BigDecimal totalPrice =
-            GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(6)).add(GetStockItem
+            applePrice.add(GetStockItem
                 .getStockItem(ProductType.MILK).getCost());
 
         Discount discount = createAppleDiscountObject();
         if (GetDiscount.getStockItem(discount)) {
-            totalPrice = totalPrice.subtract(BigDecimal.valueOf(0.40));
+            totalPrice = totalPrice.subtract(applePrice.multiply(BigDecimal.valueOf(0.10)));
         }
 
         assertEquals(BigDecimal.valueOf(1.90), totalPrice);
@@ -52,14 +53,14 @@ public class ShoppingServiceImplTest {
     @Test
     public void calculateSixApplesAndMilkInFiveDays() {
         //Price a basket containing: 6 apples and a bottle of milk, bought in 5 days time
-
+        BigDecimal applePrice = GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(6));
         BigDecimal totalPrice =
-            GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(6)).add(GetStockItem
+            applePrice.add(GetStockItem
                 .getStockItem(ProductType.MILK).getCost());
 
         Discount discount = createAppleDiscountObject();
         if (GetDiscount.getStockItem(discount)) {
-            totalPrice = totalPrice.subtract(BigDecimal.valueOf(0.40));
+            totalPrice = totalPrice.subtract(applePrice.multiply(BigDecimal.valueOf(0.10)));
         }
 
         assertEquals(BigDecimal.valueOf(1.84), totalPrice);
@@ -68,14 +69,14 @@ public class ShoppingServiceImplTest {
     @Test
     public void calculateThreeApplesAndTwoSoupInFiveDays() {
         //Price a basket containing: 3 apples, 2 tins of soup and a loaf of bread, bought in 5 days time
-
+        BigDecimal applePrice = GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(3));
         BigDecimal totalPrice =
-            GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(3)).add(GetStockItem
+            applePrice.add(GetStockItem
                 .getStockItem(ProductType.SOUP).getCost()).multiply(BigDecimal.valueOf(2));
 
         Discount discount = createAppleDiscountObject();
         if (GetDiscount.getStockItem(discount)) {
-            totalPrice = totalPrice.subtract(BigDecimal.valueOf(0.40));
+            totalPrice = totalPrice.subtract(applePrice.multiply(BigDecimal.valueOf(0.10)));
         }
 
         assertEquals(BigDecimal.valueOf(1.97), totalPrice);
