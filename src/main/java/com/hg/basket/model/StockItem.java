@@ -12,7 +12,13 @@ public class StockItem implements Serializable {
 
     private String product;
     private String unit;
-    private int cost;
+    private double cost;
+
+    public StockItem(String product, String unit, double cost) {
+        this.product = product;
+        this.unit = unit;
+        this.cost = cost;
+    }
 
     @Override
     public int hashCode() {
