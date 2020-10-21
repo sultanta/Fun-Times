@@ -1,6 +1,7 @@
 package com.hg.basket;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.hg.basket.db.GetDiscount;
 import com.hg.basket.db.GetStockItem;
@@ -9,13 +10,21 @@ import com.hg.basket.model.Discount;
 import com.hg.basket.model.StockItem;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 public class ShoppingServiceImplTest {
 
     @InjectMocks
     private ShoppingServiceImpl shoppingServiceImpl;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        shoppingServiceImpl = new ShoppingServiceImpl();
+    }
 
     @Test
     public void calculateThreeSoupAndTwoBread() {
@@ -71,8 +80,8 @@ public class ShoppingServiceImplTest {
         //Price a basket containing: 3 apples, 2 tins of soup and a loaf of bread, bought in 5 days time
         BigDecimal applePrice = GetStockItem.getStockItem(ProductType.APPLES).getCost().multiply(BigDecimal.valueOf(3));
         BigDecimal totalPrice =
-            applePrice.add(GetStockItem
-                .getStockItem(ProductType.SOUP).getCost()).multiply(BigDecimal.valueOf(2));
+            applePrice.add((GetStockItem
+                .getStockItem(ProductType.SOUP).getCost()).multiply(BigDecimal.valueOf(2)));
 
         Discount discount = createAppleDiscountObject();
         if (GetDiscount.getStockItem(discount)) {
@@ -80,6 +89,11 @@ public class ShoppingServiceImplTest {
         }
 
         assertEquals(BigDecimal.valueOf(1.97), totalPrice);
+    }
+
+    @Test
+    public void getInputs() {
+        assertTrue(shoppingServiceImpl.getInputs());
     }
 
     private Discount createDiscountObject() {
